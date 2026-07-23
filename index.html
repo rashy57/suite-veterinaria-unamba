@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suite Clínica Veterinaria - UNAMBA</title>
+
+  <!-- Favicon Médico Institucional -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23006837'><path d='M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.89 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z'/></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Librería para exportación directa a PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body data-theme="navy">
+
+  <!-- ENCABEZADO INSTITUCIONAL ENRIQUECIDO -->
+  <header class="header-unamba">
+    <div class="header-container">
+      
+      <!-- LADO IZQUIERDO: LOGO Y TÍTULOS -->
+      <div class="hero-brand">
+        <div class="logo-wrapper">
+          <img src="logo.png" alt="Logo UNAMBA" class="uni-logo" onerror="this.style.display='none'; document.getElementById('badge-unamba').style.display='flex';">
+          <div id="badge-unamba" class="logo-badge" style="display:none;">UNAMBA</div>
+        </div>
+        <div class="brand-titles">
+          <span class="uni-tag">UNIVERSIDAD NACIONAL MICAELA BASTIDAS DE APURÍMAC</span>
+          <h1>Escuela Profesional de Medicina Veterinaria y Zootecnia</h1>
+          <p class="brand-sub">Suite Digital Multiespecie • Sistema Inteligente de Cálculo Clínico y Diagnóstico</p>
+        </div>
+      </div>
+
+      <!-- CENTRO / DERECHA: INFORMACIÓN EN TIEMPO REAL Y SELECTOR DE TEMAS -->
+      <div class="header-widgets">
+        
+        <!-- Estado del Sistema -->
+        <div class="widget-box">
+          <span class="status-dot"></span>
+          <div class="widget-info">
+            <span class="widget-label">ESTADO DEL SISTEMA</span>
+            <span class="widget-val">En Línea • V2.4</span>
+          </div>
+        </div>
+
+        <!-- Reloj y Fecha Clínica -->
+        <div class="widget-box">
+          <svg class="widget-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <div class="widget-info">
+            <span class="widget-label" id="headerDate">Cargando fecha...</span>
+            <span class="widget-val" id="headerClock">00:00:00</span>
+          </div>
+        </div>
+
+        <!-- Cobertura -->
+        <div class="widget-box hide-mobile">
+          <svg class="widget-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          <div class="widget-info">
+            <span class="widget-label">COBERTURA</span>
+            <span class="widget-val">10 Especies / 13 Módulos</span>
+          </div>
+        </div>
+
+        <!-- Selector de Temas Visuales -->
+        <div class="widget-box theme-selector-box">
+          <svg class="widget-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>
+          <div class="widget-info">
+            <span class="widget-label">TEMA VISUAL</span>
+            <select id="themeSelector" class="theme-dropdown">
+              <option value="navy">🔵 Azul Marino</option>
+              <option value="green">🟢 Verde Quirúrgico</option>
+              <option value="dark">🌙 Oscuro Noche</option>
+              <option value="light">☀️ Blanco Clínico</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- BARRA DE NAVEGACIÓN EN UNA SOLA FILA -->
+  <nav class="nav-container">
+    <div class="tabs-navigation">
+      <button class="tab-button active" onclick="switchTab('paciente', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        Paciente y Triaje
+      </button>
+
+      <button class="tab-button" onclick="switchTab('fluidos', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+        Fluidos
+      </button>
+
+      <button class="tab-button" onclick="switchTab('transfusion', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path></svg>
+        Transfusión
+      </button>
+
+      <button class="tab-button" onclick="switchTab('dosis', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 2 4 4-10 10-4-4z"></path><path d="m5 11 4 4"></path><path d="m2 18 4 4"></path><path d="M9 15 2 22"></path></svg>
+        Dosis / Vademécum
+      </button>
+
+      <button class="tab-button" onclick="switchTab('cri', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3"></path><line x1="6" y1="7" x2="18" y2="7"></line><line x1="6" y1="11" x2="18" y2="11"></line></svg>
+        Infusiones CRI
+      </button>
+
+      <button class="tab-button" onclick="switchTab('anestesia', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg>
+        Anestesia
+      </button>
+
+      <button class="tab-button" onclick="switchTab('rcp', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+        RCP Emergencias
+      </button>
+
+      <button class="tab-button" onclick="switchTab('gasometria', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.31L4.78 18.27A2 2 0 0 0 6.5 21h11a2 2 0 0 0 1.72-2.73L14 9.31V2z"></path><line x1="8.5" y1="2" x2="15.5" y2="2"></line></svg>
+        Gasometría
+      </button>
+
+      <button class="tab-button" onclick="switchTab('aditivos', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        Aditivos
+      </button>
+
+      <button class="tab-button" onclick="switchTab('escalas', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        Escalas
+      </button>
+
+      <button class="tab-button" onclick="switchTab('tox', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        Toxicología
+      </button>
+
+      <button class="tab-button" onclick="switchTab('uci', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+        UCI y Nutrición
+      </button>
+
+      <button class="tab-button" onclick="switchTab('receta', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        Recetario
+      </button>
+    </div>
+  </nav>
+
+  <main class="main-content" id="printable-area">
+    
+    <!-- PESTAÑA 0: FICHA DEL PACIENTE Y TRIAJE -->
+    <div id="tab-paciente" class="tab-content active">
+      <section class="card">
+        <div class="card-header">
+          <h2>Historia Clínica, Anamnesis y Triaje Multiespecie</h2>
+        </div>
+        
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="patName">Nombre / ID del Paciente:</label>
+            <input type="text" id="patName" placeholder="Ej. Firulais / Arete 102">
+          </div>
+
+          <div class="form-group">
+            <label for="patOwner">Propietario / Tutor / Fundo:</label>
+            <input type="text" id="patOwner" placeholder="Ej. Juan Pérez">
+          </div>
+
+          <div class="form-group">
+            <label for="patSpecies">Especie:</label>
+            <select id="patSpecies">
+              <option value="canine">Canino (Perro)</option>
+              <option value="feline">Felino (Gato)</option>
+              <option value="alpaca">Alpaca (Camélido)</option>
+              <option value="llama">Llama (Camélido)</option>
+              <option value="bovine">Bovino (Vacuno)</option>
+              <option value="ovine">Ovino (Oveja)</option>
+              <option value="caprine">Caprino (Cabra)</option>
+              <option value="equine">Equino (Caballo)</option>
+              <option value="cuy">Cuyo / Cobayo</option>
+              <option value="rabbit">Conejo</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="patBreed">Raza:</label>
+            <input type="text" id="patBreed" placeholder="Ej. Huacaya / Holstein / Mestizo">
+          </div>
+
+          <div class="form-group">
+            <label for="patSex">Sexo y Estado Reproductivo:</label>
+            <select id="patSex">
+              <option value="M">Macho Entero</option>
+              <option value="MC">Macho Castrado</option>
+              <option value="F">Hembra Entera</option>
+              <option value="FE">Hembra Esterilizada</option>
+              <option value="FP">Hembra Gestante</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="patWeightMaster">Peso Corporal (kg):</label>
+            <input type="number" id="patWeightMaster" placeholder="Ej. 12" step="0.1">
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <h3 class="section-subtitle">Examen Físico de Triaje y Constantes Actuales</h3>
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="vTemp">Temperatura (°C):</label>
+            <input type="number" id="vTemp" placeholder="Ej. 38.5" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="vHR">Frecuencia Cardíaca (lpm):</label>
+            <input type="number" id="vHR" placeholder="Ej. 100" step="1">
+          </div>
+          <div class="form-group">
+            <label for="vRR">Frecuencia Respiratoria (rpm):</label>
+            <input type="number" id="vRR" placeholder="Ej. 24" step="1">
+          </div>
+          <div class="form-group">
+            <label for="vCRT">TLLC (segundos):</label>
+            <input type="number" id="vCRT" placeholder="Ej. 2" step="0.5">
+          </div>
+          <div class="form-group">
+            <label for="vMucosa">Estado de Mucosas:</label>
+            <select id="vMucosa">
+              <option value="rosadas">Rosadas Húmedas (Normal)</option>
+              <option value="palidas">Pálidas (Anemia / Shock)</option>
+              <option value="congestivas">Congestivas / Inyectadas</option>
+              <option value="ictericas">Ictéricas (Problema Hepático o Hemolítico)</option>
+              <option value="cianoticas">Cianóticas (Hipoxia)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="vPulse">Calidad del Pulso:</label>
+            <select id="vPulse">
+              <option value="fuerte">Fuerte y Lleno</option>
+              <option value="débil">Débil / Filiforme</option>
+              <option value="hiperdinamico">Hiperdinámico / Saltón</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group full-width" style="margin-top:15px;">
+          <label for="patNotes">Anamnesis y Motivo de Consulta:</label>
+          <input type="text" id="patNotes" placeholder="Escribe el motivo de consulta, días de enfermedad, tratamientos previos...">
+        </div>
+
+        <div class="results-box">
+          <h3>Valores Fisiológicos de Referencia (<span id="lblSpeciesRef">Canino</span>)</h3>
+          <div class="results-grid">
+            <p><strong>Temperatura Normal:</strong> <span id="refTemp">37.5 - 39.2</span> °C</p>
+            <p><strong>Frecuencia Cardíaca:</strong> <span id="refHR">60 - 140</span> lpm</p>
+            <p><strong>Frecuencia Respiratoria:</strong> <span id="refRR">10 - 30</span> rpm</p>
+            <p><strong>TLLC Normal:</strong> <span id="refCRT">Menor a 2</span> seg</p>
+          </div>
+          <div id="triageAlertBox" style="margin-top:12px; font-weight:700;">
+            Estado de Triaje: <span id="triageStatus">Sin datos suficientes de constantes</span>
+          </div>
+          <p class="highlight" style="margin-top:12px;"><strong>Superficie Corporal:</strong> <span id="resBSA">0.000</span> m²</p>
+        </div>
+
+        <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <button id="btnSavePatient" class="btn-action" style="margin-top:0; flex:1;">Guardar Ficha</button>
+          <button id="btnLoadPatient" class="btn-action" style="margin-top:0; background-color: #334155; flex:1;">Cargar Paciente</button>
+          <button id="btnClearPatient" class="btn-action" style="margin-top:0; background-color: #dc2626; flex:1;">Limpiar Datos</button>
+          <button id="btnExportPDF" class="btn-action" style="margin-top:0; background-color: #0f766e; flex:1;">Exportar Ficha PDF</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 1: FLUIDOTERAPIA -->
+    <div id="tab-fluidos" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Módulo de Fluidoterapia (Plan 24 Horas)</h2>
+        </div>
+        
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="weight">Peso del Paciente (kg):</label>
+            <input type="number" id="weight" placeholder="Ej. 12" step="0.1">
+          </div>
+
+          <div class="form-group">
+            <label for="dehydration">Porcentaje de Deshidratación (%):</label>
+            <input type="number" id="dehydration" placeholder="Ej. 8" step="1">
+          </div>
+
+          <div class="form-group">
+            <label for="maintenance">Mantenimiento (ml/kg/día):</label>
+            <input type="number" id="maintenance" value="50">
+          </div>
+
+          <div class="form-group">
+            <label for="losses">Pérdidas Continuas (ml/día):</label>
+            <input type="number" id="losses" value="0">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="dropFactor">Equipo de Goteo:</label>
+            <select id="dropFactor">
+              <option value="20">Macrogotero (20 gotas/ml)</option>
+              <option value="15">Macrogotero (15 gotas/ml)</option>
+              <option value="10">Macrogotero (10 gotas/ml)</option>
+              <option value="60">Microgotero (60 gotas/ml)</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="btnCalculateFluid" class="btn-action">Calcular Plan de Fluidos</button>
+
+        <div id="fluidResults" class="results-box hidden">
+          <h3>Plan Calculado de Fluidoterapia</h3>
+          <div class="results-grid">
+            <p><strong>Déficit Deshidratación:</strong> <span id="resDeficit">0</span> ml</p>
+            <p><strong>Volumen Total 24h:</strong> <span id="resTotalVol">0</span> ml</p>
+            <p class="highlight"><strong>Tasa de Infusión:</strong> <span id="resMlHour">0</span> ml/h</p>
+            <p class="highlight"><strong>Goteo:</strong> <span id="resGpm">0</span> gotas/min (<span id="resSecDrop">0</span> seg/gota)</p>
+          </div>
+          <button class="btn-print" onclick="window.print()">Imprimir Ficha de Tratamiento UNAMBA</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA: TRANSFUSIÓN SANGUÍNEA Y OSMOLARIDAD -->
+    <div id="tab-transfusion" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Calculadora de Transfusión Sanguínea y Osmolaridad Plasmática</h2>
+        </div>
+
+        <h3 class="section-subtitle">Dosis de Sangre Entera / Eritrocitos Concentrados</h3>
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="transWeight">Peso Receptor (kg):</label>
+            <input type="number" id="transWeight" placeholder="Ej. 12" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="transCurrentHt">Hematocrito Actual Receptor (%):</label>
+            <input type="number" id="transCurrentHt" placeholder="Ej. 12" step="1">
+          </div>
+          <div class="form-group">
+            <label for="transTargetHt">Hematocrito Objetivo (%):</label>
+            <input type="number" id="transTargetHt" placeholder="Ej. 25" step="1">
+          </div>
+          <div class="form-group">
+            <label for="transDonorHt">Hematocrito Donante (%):</label>
+            <input type="number" id="transDonorHt" value="45" step="1">
+          </div>
+          <div class="form-group full-width">
+            <label for="transProduct">Tipo de Producto Sanguíneo:</label>
+            <select id="transProduct">
+              <option value="wholeCanine">Sangre Entera Canina (K = 90)</option>
+              <option value="wholeFeline">Sangre Entera Felina (K = 66)</option>
+              <option value="prbc">Paquete Globular / Eritrocitos Concentrados (K = 1.5 por % subida)</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="btnCalculateTransfusion" class="btn-action">Calcular Volumen Sanguíneo</button>
+
+        <div id="transfusionResults" class="results-box hidden">
+          <h3>Cálculo de Transfusión</h3>
+          <p class="highlight"><strong>Volumen Total A Transfundir:</strong> <span id="resTransVol">0</span> ml</p>
+          <p><strong>Tasa de Infusión Inicial (Primeros 30 min):</strong> <span id="resTransRateInit">0</span> ml/h (0.25 - 0.5 ml/kg/h)</p>
+        </div>
+
+        <hr class="section-divider">
+
+        <h3 class="section-subtitle">Osmolaridad Plasmática Efectiva</h3>
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="osmNa">Sodio Na+ (mEq/L):</label>
+            <input type="number" id="osmNa" placeholder="Ej. 145">
+          </div>
+          <div class="form-group">
+            <label for="osmK">Potasio K+ (mEq/L):</label>
+            <input type="number" id="osmK" placeholder="Ej. 4.2">
+          </div>
+          <div class="form-group">
+            <label for="osmGlu">Glucosa (mg/dL):</label>
+            <input type="number" id="osmGlu" placeholder="Ej. 100">
+          </div>
+          <div class="form-group">
+            <label for="osmBUN">BUN / Urea (mg/dL):</label>
+            <input type="number" id="osmBUN" placeholder="Ej. 20">
+          </div>
+        </div>
+
+        <button id="btnCalculateOsm" class="btn-action">Calcular Osmolaridad</button>
+
+        <div id="osmResults" class="results-box hidden">
+          <h3>Resultado Osmolaridad</h3>
+          <p class="highlight"><strong>Osmolaridad Calculada:</strong> <span id="resOsmValue">0</span> mOsm/kg</p>
+          <p><strong>Rango Fisiológico Normal:</strong> 290 - 310 mOsm/kg</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 2: DOSIS Y VADEMÉCUM EXTENDIDO -->
+    <div id="tab-dosis" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Calculadora de Dosis y Vademécum Clínico</h2>
+        </div>
+
+        <div class="form-layout">
+          <div class="form-group full-width">
+            <label for="drugSearch">Buscar Fármaco en Vademécum:</label>
+            <input type="text" id="drugSearch" placeholder="Escribe para buscar (ej. Meloxicam, Cefazolina, Diazepam)...">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="drugPreset">Seleccionar Fármaco:</label>
+            <select id="drugPreset">
+              <option value="">-- Ingreso Manual o Selecciona un Fármaco --</option>
+              <optgroup label="Analgésicos / AINEs / Opiáceos">
+                <option value="meloxicam">Meloxicam (0.2 mg/kg - 5 mg/ml)</option>
+                <option value="ketoprofeno">Ketoprofeno (2 mg/kg - 10 mg/ml)</option>
+                <option value="carprofeno">Carprofeno (4.4 mg/kg - 50 mg/ml)</option>
+                <option value="dipirona">Dipirona / Metamizol (25 mg/kg - 500 mg/ml)</option>
+                <option value="tramadol">Tramadol (3 mg/kg - 50 mg/ml)</option>
+                <option value="buprenorfina">Buprenorfina (0.02 mg/kg - 0.3 mg/ml)</option>
+                <option value="fentanilo">Fentanilo Bolo (0.005 mg/kg - 0.05 mg/ml)</option>
+                <option value="morfina">Morfina (0.5 mg/kg - 10 mg/ml)</option>
+              </optgroup>
+              <optgroup label="Antibacterianos / Antiinfecciosos">
+                <option value="ampicilina">Ampicilina (20 mg/kg - 100 mg/ml)</option>
+                <option value="cefazolina">Cefazolina (20 mg/kg - 100 mg/ml)</option>
+                <option value="ceftriaxona">Ceftriaxona (25 mg/kg - 100 mg/ml)</option>
+                <option value="enrofloxacina">Enrofloxacina (5 mg/kg - 50 mg/ml)</option>
+                <option value="metronidazol">Metronidazol (15 mg/kg - 5 mg/ml)</option>
+                <option value="gentamicina">Gentamicina (6.6 mg/kg - 40 mg/ml)</option>
+                <option value="amoxiclav">Amoxicilina + Ac. Clavulánico (12.5 mg/kg - 100 mg/ml)</option>
+                <option value="marbofloxacina">Marbofloxacina (2.7 mg/kg - 10 mg/ml)</option>
+                <option value="oxitetraciclina">Oxitetraciclina L.A. (20 mg/kg - 200 mg/ml)</option>
+              </optgroup>
+              <optgroup label="Sedantes / Anticonvulsivantes / Anestésicos">
+                <option value="propofol">Propofol (6 mg/kg - 10 mg/ml)</option>
+                <option value="midazolam">Midazolam (0.2 mg/kg - 5 mg/ml)</option>
+                <option value="diazepam">Diazepam (0.5 mg/kg - 5 mg/ml)</option>
+                <option value="ketamina">Ketamina (5 mg/kg - 100 mg/ml)</option>
+                <option value="dexmedetomidina">Dexmedetomidina (0.005 mg/kg - 0.5 mg/ml)</option>
+                <option value="acepromacina">Acepromacina (0.03 mg/kg - 10 mg/ml)</option>
+                <option value="xilacina">Xilacina (1 mg/kg - 20 mg/ml)</option>
+                <option value="fenobarbital">Fenobarbital (3 mg/kg - 60 mg/ml)</option>
+              </optgroup>
+              <optgroup label="Gastrointestinales / Antieméticos">
+                <option value="maropitant">Maropitant / Cerenia (1 mg/kg - 10 mg/ml)</option>
+                <option value="ondansetron">Ondansetrón (0.5 mg/kg - 2 mg/ml)</option>
+                <option value="metoclopramida">Metoclopramida (0.5 mg/kg - 5 mg/ml)</option>
+                <option value="ranitidina">Ranitidina (2 mg/kg - 25 mg/ml)</option>
+                <option value="famotidina">Famotidina (0.5 mg/kg - 10 mg/ml)</option>
+                <option value="omeprazol">Omeprazol (1 mg/kg - 4 mg/ml)</option>
+              </optgroup>
+              <optgroup label="Corticoides, Cardiovascular y Respiratorio">
+                <option value="dexametasona">Dexametasona (0.1 mg/kg - 2 mg/ml)</option>
+                <option value="hidrocortisona">Hidrocortisona (5 mg/kg - 50 mg/ml)</option>
+                <option value="prednisolona">Metilprednisolona (1 mg/kg - 40 mg/ml)</option>
+                <option value="furosemida">Furosemida (2 mg/kg - 50 mg/ml)</option>
+                <option value="aminofilina">Aminofilina (10 mg/kg - 25 mg/ml)</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="drugWeight">Peso Paciente (kg):</label>
+            <input type="number" id="drugWeight" placeholder="Ej. 12" step="0.1">
+          </div>
+
+          <div class="form-group">
+            <label for="dose">Dosis (mg/kg):</label>
+            <input type="number" id="dose" placeholder="Ej. 0.2" step="0.001">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="concentration">Concentración del Frasco (mg/ml):</label>
+            <input type="number" id="concentration" placeholder="Ej. 5" step="0.01">
+          </div>
+        </div>
+
+        <div id="drugInteractionWarning" class="alert-box hidden" style="margin-top:15px; padding:12px;">
+          <strong>Alerta Clínico:</strong> <span id="interactionMsg"></span>
+        </div>
+
+        <button id="btnCalculateDrug" class="btn-action">Calcular Volumen a Inyectar</button>
+
+        <div id="drugResults" class="results-box hidden">
+          <h3>Volumen Requerido</h3>
+          <p><strong>Dosis Total en Mg:</strong> <span id="resTotalMg">0</span> mg</p>
+          <p class="highlight"><strong>Volumen a Administrar:</strong> <span id="resVolMl">0</span> ml</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 3: INFUSIONES A TASA CONTINUA (CRI) -->
+    <div id="tab-cri" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Infusiones a Tasa Continua (CRI)</h2>
+        </div>
+
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="criWeight">Peso Paciente (kg):</label>
+            <input type="number" id="criWeight" placeholder="Ej. 12" step="0.1">
+          </div>
+
+          <div class="form-group">
+            <label for="criFluidRate">Tasa Suero (ml/h):</label>
+            <input type="number" id="criFluidRate" placeholder="Ej. 25" step="0.1">
+          </div>
+
+          <div class="form-group">
+            <label for="criBagVolume">Volumen Bolsa (ml):</label>
+            <input type="number" id="criBagVolume" value="500" step="50">
+          </div>
+
+          <div class="form-group">
+            <label for="criDrugRate">Dosis Fármaco (mcg/kg/min):</label>
+            <input type="number" id="criDrugRate" placeholder="Ej. 5" step="0.1">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="criDrugConc">Concentración Fármaco (mg/ml):</label>
+            <input type="number" id="criDrugConc" placeholder="Ej. 50" step="0.1">
+          </div>
+        </div>
+
+        <button id="btnCalculateCRI" class="btn-action">Calcular Adición para CRI</button>
+
+        <div id="criResults" class="results-box hidden">
+          <h3>Preparación de Bolsa de CRI</h3>
+          <p><strong>Dosis Horaria Requerida:</strong> <span id="resCriHourlyMg">0</span> mg/h</p>
+          <p class="highlight"><strong>Volumen a añadir a la bolsa de <span id="resCriBagLabel">500</span> ml:</strong> <span id="resCriDrugMl">0</span> ml</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 4: ANESTESIA -->
+    <div id="tab-anestesia" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Módulo de Anestesia y Respiratorio</h2>
+        </div>
+
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="anesWeight">Peso Paciente (kg):</label>
+            <input type="number" id="anesWeight" placeholder="Ej. 12" step="0.1">
+          </div>
+
+          <div class="form-group">
+            <label for="species">Especie:</label>
+            <select id="species">
+              <option value="canine">Perro (Canino)</option>
+              <option value="feline">Gato (Felino)</option>
+              <option value="alpaca">Alpaca / Llama</option>
+              <option value="bovine">Bovino</option>
+              <option value="equine">Equino</option>
+              <option value="smallRuminant">Ovino / Caprino</option>
+              <option value="smallExotic">Cuyo / Conejo</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="btnCalculateAnesthesia" class="btn-action">Calcular Parámetros Anestésicos</button>
+
+        <div id="anesResults" class="results-box hidden">
+          <h3>Parámetros Anestésicos Sugeridos</h3>
+          <div class="results-grid">
+            <p><strong>Tubo Endotraqueal:</strong> <span id="resETTube">0</span> mm DI</p>
+            <p><strong>Volumen Corriente (Vt):</strong> <span id="resTidalVolume">0</span> ml (10-15 ml/kg)</p>
+            <p class="highlight"><strong>Bolsa Reservorio:</strong> <span id="resBagSize">0</span> L</p>
+            <p><strong>Circuito Anestésico:</strong> <span id="resCircuit">0</span></p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 5: EMERGENCIAS Y RCP -->
+    <div id="tab-rcp" class="tab-content">
+      <section class="card emergency-card">
+        <div class="card-header">
+          <h2>Módulo de Emergencias y RCP (RECOVER)</h2>
+        </div>
+
+        <div class="form-group">
+          <label for="cprWeight">Peso del Paciente (kg):</label>
+          <input type="number" id="cprWeight" placeholder="Ej. 12" step="0.1">
+        </div>
+
+        <button id="btnCalculateCPR" class="btn-action btn-emergency">Calcular Fármacos de Emergencia</button>
+
+        <div id="cprResults" class="results-box hidden alert-box">
+          <h3>Protocolo RCP RECOVER</h3>
+          <div class="results-grid">
+            <p><strong>Adrenalina Dosis Baja (0.01 mg/kg - 1 mg/ml):</strong> <span id="resEpiLow" class="highlight-danger">0</span> ml</p>
+            <p><strong>Adrenalina Dosis Alta (0.1 mg/kg):</strong> <span id="resEpiHigh">0</span> ml</p>
+            <p><strong>Atropina (0.04 mg/kg - 0.5 mg/ml):</strong> <span id="resAtropine" class="highlight-danger">0</span> ml</p>
+            <p><strong>Desfibrilación Bifásica (2-4 J/kg):</strong> <span id="resDefibBiphasic">0</span> Joules</p>
+            <p><strong>Desfibrilación Monofásica (4-6 J/kg):</strong> <span id="resDefibMonophasic">0</span> Joules</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA: GASOMETRÍA Y ELECTRÓLITOS -->
+    <div id="tab-gasometria" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Interpretador de Gasometría y Electrólitos</h2>
+        </div>
+
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="gasPH">pH Sangre:</label>
+            <input type="number" id="gasPH" placeholder="Ej. 7.35" step="0.01">
+          </div>
+          <div class="form-group">
+            <label for="gasPCO2">pCO2 (mmHg):</label>
+            <input type="number" id="gasPCO2" placeholder="Ej. 40" step="1">
+          </div>
+          <div class="form-group">
+            <label for="gasHCO3">HCO3- (mEq/L):</label>
+            <input type="number" id="gasHCO3" placeholder="Ej. 20" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="gasNa">Sodio Na+ (mEq/L):</label>
+            <input type="number" id="gasNa" placeholder="Ej. 145" step="1">
+          </div>
+          <div class="form-group">
+            <label for="gasK">Potasio K+ (mEq/L):</label>
+            <input type="number" id="gasK" placeholder="Ej. 4.2" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="gasCl">Cloro Cl- (mEq/L):</label>
+            <input type="number" id="gasCl" placeholder="Ej. 110" step="1">
+          </div>
+        </div>
+
+        <button id="btnCalculateGas" class="btn-action">Analizar Gasometría y Anion Gap</button>
+
+        <div id="gasResults" class="results-box hidden">
+          <h3>Interpretación de Ácido-Base</h3>
+          <p class="highlight"><strong>Estado Diagnóstico:</strong> <span id="resGasDiagnosis">Normal</span></p>
+          <p><strong>Anion Gap Calculado:</strong> <span id="resAnionGap">0</span> mEq/L (Rango Ref: 12 - 24 mEq/L)</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 6: ADITIVOS Y DILUCIONES -->
+    <div id="tab-aditivos" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Suplementación de Sueros y Diluciones</h2>
+        </div>
+
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="bagVolume">Volumen Bolsa (ml):</label>
+            <input type="number" id="bagVolume" value="500" step="50">
+          </div>
+
+          <div class="form-group">
+            <label for="kclLevel">Potasio Sérico (mEq/L):</label>
+            <input type="number" id="kclLevel" placeholder="Ej. 2.2" step="0.1">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="dextrosePct">Porcentaje de Dextrosa Deseado en Bolsa:</label>
+            <select id="dextrosePct">
+              <option value="0">Sin Dextrosa (0%)</option>
+              <option value="2.5">2.5% Dextrosa</option>
+              <option value="5.0">5.0% Dextrosa</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="btnCalculateAdditives" class="btn-action">Calcular Aditivos para la Bolsa</button>
+
+        <div id="additiveResults" class="results-box hidden">
+          <h3>Aditivos A Agregar A La Bolsa</h3>
+          <p><strong>KCl a añadir (2 mEq/ml):</strong> <span id="resKclMl" class="highlight">0</span> ml (<span id="resMeqLiter">0</span> mEq/L requeridos)</p>
+          <p><strong>Dextrosa al 50% a añadir:</strong> <span id="resDextroseMl" class="highlight">0</span> ml</p>
+        </div>
+
+        <hr class="section-divider">
+
+        <h3 class="section-subtitle">Calculadora de Diluciones Generales</h3>
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="dilC1">Concentración Inicial (% o mg/ml):</label>
+            <input type="number" id="dilC1" placeholder="Ej. 50 (% Dextrosa)">
+          </div>
+          <div class="form-group">
+            <label for="dilC2">Concentración Deseada (% o mg/ml):</label>
+            <input type="number" id="dilC2" placeholder="Ej. 5 (% Dextrosa)">
+          </div>
+          <div class="form-group full-width">
+            <label for="dilV2">Volumen Final Deseado (ml):</label>
+            <input type="number" id="dilV2" placeholder="Ej. 500 (ml de solución final)">
+          </div>
+        </div>
+        <button id="btnCalculateDilution" class="btn-action">Calcular Volumen Concentrado</button>
+
+        <div id="dilutionResults" class="results-box hidden">
+          <h3>Resultado de Mezcla</h3>
+          <p><strong>Volumen del producto concentrado:</strong> <span id="resDilV1" class="highlight">0</span> ml</p>
+          <p><strong>Volumen del diluyente (Agua / Suero Base):</strong> <span id="resDilSolvent">0</span> ml</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA: ESCALAS DE DOLOR Y CONDICIÓN CORPORAL -->
+    <div id="tab-escalas" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Escalas Fisiológicas Interactivas y Evaluación</h2>
+        </div>
+
+        <h3 class="section-subtitle">1. Evaluador de Grado de Deshidratación</h3>
+        <div class="form-group full-width">
+          <label for="selectDehySigns">Signos Clínicos Observados:</label>
+          <select id="selectDehySigns">
+            <option value="0">Sin alteración / Turgencia cutánea normal (&lt; 5%)</option>
+            <option value="6">Pérdida leve de turgencia, mucosas ligeramente secas (5 - 6%)</option>
+            <option value="8">Pliegue cutáneo marcado, TLLC 2-3 seg, ojos levemente hundidos (7 - 9%)</option>
+            <option value="11">Pliegue persistente, TLLC &gt; 3 seg, mucosas secas, pulso débil (10 - 12%)</option>
+            <option value="13">Shock Hipovolémico Crítico (&gt; 12%)</option>
+          </select>
+        </div>
+
+        <div class="results-box" style="margin-top:15px;">
+          <p><strong>Estimación de Pérdida de Agua:</strong> <span id="resDehyPctDisplay" class="highlight">Menos de 5%</span></p>
+        </div>
+
+        <hr class="section-divider">
+
+        <h3 class="section-subtitle">2. Escala Abreviada de Dolor Agudo (Glasgow / Colorado)</h3>
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="painPosture">Postura y Expresión:</label>
+            <select id="painPosture">
+              <option value="0">Normal, cómodo y atento</option>
+              <option value="1">Ligeramente agazapado o inquieto</option>
+              <option value="2">Postura rígida, encorvado o en "rezo"</option>
+              <option value="3">Inmóvil, postrado o vocalizando de dolor</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="painPalpation">Respuesta a la Palpación:</label>
+            <select id="painPalpation">
+              <option value="0">Sin reaccionar / Tolera palpación</option>
+              <option value="1">Mira la zona palpada o se tensa</option>
+              <option value="2">Retira la zona, se queja o intenta morder</option>
+              <option value="3">Grita o reacciona agresivamente al tacto suave</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="btnEvaluatePain" class="btn-action">Evaluar Nivel de Dolor</button>
+
+        <div id="painResults" class="results-box hidden">
+          <h3>Puntaje de Dolor</h3>
+          <p><strong>Puntaje Obtenido:</strong> <span id="resPainScore" class="highlight">0</span> / 6</p>
+          <p><strong>Recomendación Analgésica:</strong> <span id="resPainRec">Sin dolor clínicamente significativo</span></p>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 7: TOXICOLOGÍA Y CHOCOLATE -->
+    <div id="tab-tox" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Toxicología y Antídotos Rápidos</h2>
+        </div>
+
+        <div class="form-group">
+          <label for="toxWeight">Peso del Paciente (kg):</label>
+          <input type="number" id="toxWeight" placeholder="Ej. 12" step="0.1">
+        </div>
+
+        <button id="btnCalculateTox" class="btn-action">Calcular Protocolo De Desintoxicación</button>
+
+        <div id="toxResults" class="results-box hidden">
+          <h3>Dosis De Emergencia Toxicológica</h3>
+          <div class="results-grid">
+            <p><strong>Carbón Activado (1-2 g/kg):</strong> <span id="resCharcoal">0</span> g</p>
+            <p><strong>Apomorfina (Perros - 0.03 mg/kg IV):</strong> <span id="resApomorphine">0</span> mg</p>
+            <p><strong>Xilacina (Gatos emesis - 0.44 mg/kg IM):</strong> <span id="resXylazine">0</span> mg</p>
+            <p><strong>Vitamina K1 (Rodenticidas - 2.5 mg/kg):</strong> <span id="resVitK">0</span> mg</p>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <h3 class="section-subtitle">Calculadora de Toxicidad por Chocolate (Caninos)</h3>
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="chocType">Tipo de Chocolate Ingerido:</label>
+            <select id="chocType">
+              <option value="white">Chocolate Blanco (Muy bajo riesgo)</option>
+              <option value="milk">Chocolate con Leche (1.5 - 2.0 mg teobromina/g)</option>
+              <option value="dark">Chocolate Negro / Bitter (5.0 - 8.0 mg/g)</option>
+              <option value="baker">Chocolate de Cobertura / Cacao en Polvo (14 - 26 mg/g)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="chocGrams">Cantidad Ingerida (Gramos):</label>
+            <input type="number" id="chocGrams" placeholder="Ej. 100" step="5">
+          </div>
+        </div>
+        <button id="btnCalculateChoc" class="btn-action">Evaluar Riesgo por Teobromina</button>
+
+        <div id="chocResults" class="results-box hidden">
+          <h3>Evaluación de Riesgo Toxicológico</h3>
+          <p><strong>Dosis Estimada de Teobromina:</strong> <span id="resChocDose">0</span> mg/kg</p>
+          <p class="highlight"><strong>Nivel de Toxicidad:</strong> <span id="resChocRisk">Bajo</span></p>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 8: BALANCE HÍDRICO UCI & NUTRICIÓN -->
+    <div id="tab-uci" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Balance Hídrico Diario (UCI) y Nutrición</h2>
+        </div>
+
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="uciWeight">Peso Paciente (kg):</label>
+            <input type="number" id="uciWeight" placeholder="Ej. 12" step="0.1">
+          </div>
+
+          <div class="form-group">
+            <label for="uciHours">Horas Control:</label>
+            <input type="number" id="uciHours" value="6" step="1">
+          </div>
+
+          <div class="form-group">
+            <label for="uciIn">Entradas (ml):</label>
+            <input type="number" id="uciIn" placeholder="Ej. 180" step="1">
+          </div>
+
+          <div class="form-group">
+            <label for="uciUrine">Orina Producida (ml):</label>
+            <input type="number" id="uciUrine" placeholder="Ej. 90" step="1">
+          </div>
+        </div>
+
+        <button id="btnCalculateUCI" class="btn-action">Calcular Balance y Diuresis</button>
+
+        <div id="uciResults" class="results-box hidden">
+          <h3>Resultado Monitoreo UCI</h3>
+          <p class="highlight"><strong>Producción de Orina:</strong> <span id="resDiuresis">0</span> ml/kg/h</p>
+          <p><strong>Estado de Diuresis:</strong> <span id="resDiuresisStatus">0</span></p>
+          <p><strong>Balance Neto (Entradas - Salidas):</strong> <span id="resNetBalance">0</span> ml</p>
+        </div>
+
+        <hr class="section-divider">
+
+        <h3 class="section-subtitle">Requerimiento Energético (RER y MER)</h3>
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="nutrWeight">Peso Paciente (kg):</label>
+            <input type="number" id="nutrWeight" placeholder="Ej. 12" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="nutrFactor">Factor de Mantenimiento / Estado:</label>
+            <select id="nutrFactor">
+              <option value="1.0">RER Básico Hospitalizado (1.0 × RER)</option>
+              <option value="1.2">Mantenimiento Perro Neutrado (1.2 × RER)</option>
+              <option value="1.6">Perro Intacto / Trabajo (1.6 × RER)</option>
+              <option value="1.2">Gato Mantenimiento (1.2 × RER)</option>
+            </select>
+          </div>
+        </div>
+        <button id="btnCalculateNutr" class="btn-action">Calcular Requerimiento Calórico</button>
+
+        <div id="nutrResults" class="results-box hidden">
+          <h3>Calorías Diarias</h3>
+          <p><strong>RER (Energía en Reposo):</strong> <span id="resRER" class="highlight">0</span> kcal/día</p>
+          <p><strong>MER (Mantenimiento Estimado):</strong> <span id="resMER" class="highlight">0</span> kcal/día</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA: RECETARIO INSTITUCIONAL -->
+    <div id="tab-receta" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Prescripción y Receta Médica UNAMBA</h2>
+        </div>
+
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="rxVet">Médico Veterinario Tratante:</label>
+            <input type="text" id="rxVet" placeholder="Ej. Dr. Mario Quispe">
+          </div>
+          <div class="form-group">
+            <label for="rxColegiatura">N° Colegiatura (C.M.V.P.):</label>
+            <input type="text" id="rxColegiatura" placeholder="Ej. CMVP 8452">
+          </div>
+          <div class="form-group full-width">
+            <label for="rxDx">Diagnóstico Presuntivo / Definitivo:</label>
+            <input type="text" id="rxDx" placeholder="Ej. Gastroenteritis Hemorrágica / Bronconeumonía">
+          </div>
+          <div class="form-group full-width">
+            <label for="rxBody">Prescripción de Fármacos e Indicaciones:</label>
+            <textarea id="rxBody" rows="6" placeholder="1. Amoxicilina 250mg: Administrar 1 comprimido cada 12 horas por 7 días vía oral.&#10;2. Meloxicam 1mg: Administrar 1 comprimido cada 24 horas con alimento por 3 días."></textarea>
+          </div>
+        </div>
+
+        <div class="signature-box" style="margin-top:30px; display:flex; justify-content:flex-end;">
+          <div style="text-align:center; border-top:1px solid #000; width:220px; padding-top:6px;">
+            <p style="margin:0; font-weight:700;" id="printVetName">Firma / Sello Médico</p>
+            <p style="margin:0; font-size:0.85rem;" id="printVetCol">C.M.V.P. N° ______</p>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:20px;">
+          <button class="btn-action" onclick="window.print()" style="margin-top:0; flex:1;">Imprimir Receta</button>
+          <button class="btn-action" id="btnExportRxPDF" style="margin-top:0; background-color:#0f766e; flex:1;">Generar PDF Oficial</button>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <footer class="footer-unamba">
+    <p>Escuela Profesional de Medicina Veterinaria y Zootecnia — <strong>Universidad Nacional Micaela Bastidas de Apurímac</strong></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

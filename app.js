@@ -2,16 +2,16 @@
 // BASE DE DATOS DE VALORES FISIOLÓGICOS (10 ESPECIES)
 // ==========================================
 const speciesPhysiology = {
-  canine: { name: "Canino", temp: "37.5 - 39.2", hr: "60 - 140", rr: "10 - 30", crt: "Menor a 2", k: 10.1, tempMin: 37.5, tempMax: 39.2 },
-  feline: { name: "Felino", temp: "38.0 - 39.2", hr: "140 - 220", rr: "20 - 40", crt: "Menor a 2", k: 10.0, tempMin: 38.0, tempMax: 39.2 },
-  alpaca: { name: "Alpaca", temp: "37.5 - 38.9", hr: "60 - 90", rr: "10 - 30", crt: "Menor a 2", k: 10.0, tempMin: 37.5, tempMax: 38.9 },
-  llama: { name: "Llama", temp: "37.5 - 38.9", hr: "60 - 90", rr: "10 - 30", crt: "Menor a 2", k: 10.0, tempMin: 37.5, tempMax: 38.9 },
-  bovine: { name: "Bovino", temp: "38.0 - 39.0", hr: "40 - 80", rr: "10 - 30", crt: "Menor a 2", k: 10.5, tempMin: 38.0, tempMax: 39.0 },
-  ovine: { name: "Ovino", temp: "38.5 - 40.0", hr: "70 - 90", rr: "12 - 20", crt: "Menor a 2", k: 10.0, tempMin: 38.5, tempMax: 40.0 },
-  caprine: { name: "Caprino", temp: "38.5 - 40.0", hr: "70 - 90", rr: "12 - 20", crt: "Menor a 2", k: 10.0, tempMin: 38.5, tempMax: 40.0 },
-  equine: { name: "Equino", temp: "37.2 - 38.3", hr: "28 - 44", rr: "8 - 16", crt: "Menor a 2", k: 10.5, tempMin: 37.2, tempMax: 38.3 },
-  cuy: { name: "Cuyo / Cobayo", temp: "37.2 - 39.5", hr: "230 - 380", rr: "42 - 104", crt: "Menor a 2", k: 9.9, tempMin: 37.2, tempMax: 39.5 },
-  rabbit: { name: "Conejo", temp: "38.5 - 40.0", hr: "130 - 325", rr: "30 - 60", crt: "Menor a 2", k: 9.9, tempMin: 38.5, tempMax: 40.0 }
+  canine: { name: "Canino", temp: "37.5 - 39.2", hr: "60 - 140", rr: "10 - 30", crt: "Menor a 2", k: 10.1, tempMin: 37.5, tempMax: 39.2, normalHt: 45, gestDays: 63 },
+  feline: { name: "Felino", temp: "38.0 - 39.2", hr: "140 - 220", rr: "20 - 40", crt: "Menor a 2", k: 10.0, tempMin: 38.0, tempMax: 39.2, normalHt: 37, gestDays: 65 },
+  alpaca: { name: "Alpaca", temp: "37.5 - 38.9", hr: "60 - 90", rr: "10 - 30", crt: "Menor a 2", k: 10.0, tempMin: 37.5, tempMax: 38.9, normalHt: 32, gestDays: 342 },
+  llama: { name: "Llama", temp: "37.5 - 38.9", hr: "60 - 90", rr: "10 - 30", crt: "Menor a 2", k: 10.0, tempMin: 37.5, tempMax: 38.9, normalHt: 32, gestDays: 342 },
+  bovine: { name: "Bovino", temp: "38.0 - 39.0", hr: "40 - 80", rr: "10 - 30", crt: "Menor a 2", k: 10.5, tempMin: 38.0, tempMax: 39.0, normalHt: 35, gestDays: 283 },
+  ovine: { name: "Ovino", temp: "38.5 - 40.0", hr: "70 - 90", rr: "12 - 20", crt: "Menor a 2", k: 10.0, tempMin: 38.5, tempMax: 40.0, normalHt: 32, gestDays: 150 },
+  caprine: { name: "Caprino", temp: "38.5 - 40.0", hr: "70 - 90", rr: "12 - 20", crt: "Menor a 2", k: 10.0, tempMin: 38.5, tempMax: 40.0, normalHt: 32, gestDays: 150 },
+  equine: { name: "Equino", temp: "37.2 - 38.3", hr: "28 - 44", rr: "8 - 16", crt: "Menor a 2", k: 10.5, tempMin: 37.2, tempMax: 38.3, normalHt: 40, gestDays: 340 },
+  cuy: { name: "Cuyo / Cobayo", temp: "37.2 - 39.5", hr: "230 - 380", rr: "42 - 104", crt: "Menor a 2", k: 9.9, tempMin: 37.2, tempMax: 39.5, normalHt: 40, gestDays: 68 },
+  rabbit: { name: "Conejo", temp: "38.5 - 40.0", hr: "130 - 325", rr: "30 - 60", crt: "Menor a 2", k: 9.9, tempMin: 38.5, tempMax: 40.0, normalHt: 41, gestDays: 31 }
 };
 
 // Base de datos para autocompletado en el Vademécum
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- 3. SINCRONIZACIÓN AUTOMÁTICA DE PESO Y SUPERFICIE CORPORAL ---
-  const weightInputs = ['patWeightMaster', 'weight', 'transWeight', 'drugWeight', 'criWeight', 'anesWeight', 'cprWeight', 'toxWeight', 'uciWeight', 'nutrWeight'];
+  const weightInputs = ['patWeightMaster', 'weight', 'transWeight', 'drugWeight', 'criWeight', 'anesWeight', 'localWeight', 'cprWeight', 'toxWeight', 'uciWeight', 'nutrWeight', 'criaWeight', 'c3Weight'];
 
   weightInputs.forEach(id => {
     const input = document.getElementById(id);
@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 6. FLUIDOTERAPIA ---
+  // --- 6. FLUIDOTERAPIA CON DESGLOSE TIEMPO A TIEMPO Y CRONOGRAMA ---
   const btnFluid = document.getElementById('btnCalculateFluid');
   if (btnFluid) {
     btnFluid.addEventListener('click', () => {
@@ -331,26 +331,226 @@ document.addEventListener('DOMContentLoaded', () => {
       const maintenance = parseFloat(document.getElementById('maintenance').value) || 50;
       const losses = parseFloat(document.getElementById('losses').value) || 0;
       const dropFactor = parseFloat(document.getElementById('dropFactor').value) || 20;
+      const planHours = parseFloat(document.getElementById('fluidHours') ? document.getElementById('fluidHours').value : 24) || 24;
 
-      if (weight <= 0) { alert("Ingresa un peso válido."); return; }
+      if (weight <= 0 || planHours <= 0) { 
+        alert("Ingresa un peso y número de horas válidos."); 
+        return; 
+      }
 
       const deficitMl = weight * dehydration * 10;
-      const maintenanceMl = weight * maintenance;
+      const maintenanceMl = (weight * maintenance) * (planHours / 24);
       const totalVolume = deficitMl + maintenanceMl + losses;
-      const mlPerHour = totalVolume / 24;
-      const dropsPerMinute = (mlPerHour * dropFactor) / 60;
+
+      const mlPerHour = totalVolume / planHours;
+      const mlPerMin = mlPerHour / 60;
+      const dropsPerMinute = mlPerMin * dropFactor;
+      const dropsPerSecond = dropsPerMinute / 60;
       const secondsPerDrop = dropsPerMinute > 0 ? 60 / dropsPerMinute : 0;
 
+      if (document.getElementById('resPlanHoursLabel')) document.getElementById('resPlanHoursLabel').textContent = planHours;
       document.getElementById('resDeficit').textContent = Math.round(deficitMl);
       document.getElementById('resTotalVol').textContent = Math.round(totalVolume);
+      
       document.getElementById('resMlHour').textContent = mlPerHour.toFixed(1);
+      if (document.getElementById('resMlMin')) document.getElementById('resMlMin').textContent = mlPerMin.toFixed(2);
       document.getElementById('resGpm').textContent = Math.round(dropsPerMinute);
+      if (document.getElementById('resGps')) document.getElementById('resGps').textContent = dropsPerSecond.toFixed(2);
       document.getElementById('resSecDrop').textContent = secondsPerDrop.toFixed(1);
+
+      const tableBody = document.getElementById('fluidTableBody');
+      if (tableBody) {
+        tableBody.innerHTML = '';
+        
+        const baseCheckpoints = [1, 2, 4, 6, 8, 12, 18, 24];
+        const checkpoints = baseCheckpoints.filter(h => h <= planHours);
+        if (!checkpoints.includes(planHours)) checkpoints.push(planHours);
+
+        checkpoints.forEach(h => {
+          const volPassed = mlPerHour * h;
+          const volRemaining = Math.max(0, totalVolume - volPassed);
+          
+          const tr = document.createElement('tr');
+          tr.style.borderBottom = '1px solid var(--border-color)';
+          tr.innerHTML = `
+            <td style="padding: 8px;"><strong>A las ${h} Hora(s)</strong></td>
+            <td style="padding: 8px; color: var(--unamba-green); font-weight: 700;">${Math.round(volPassed)} ml</td>
+            <td style="padding: 8px; color: var(--text-secondary);">${Math.round(volRemaining)} ml</td>
+          `;
+          tableBody.appendChild(tr);
+        });
+      }
+
       document.getElementById('fluidResults').classList.remove('hidden');
     });
   }
 
-  // --- 7. TRANSFUSIÓN Y OSMOLARIDAD ---
+  // --- 7. CALCULADORA DE GESTACIÓN Y CALENDARIO OBSTÉTRICO ---
+  const btnGest = document.getElementById('btnCalculateGestation');
+  if (btnGest) {
+    btnGest.addEventListener('click', () => {
+      const speciesKey = document.getElementById('gestSpecies').value;
+      const dateVal = document.getElementById('gestDate').value;
+
+      if (!dateVal) { alert("Ingresa una fecha de servicio o inseminación."); return; }
+
+      const startDate = new Date(dateVal);
+      const gestDays = speciesPhysiology[speciesKey] ? speciesPhysiology[speciesKey].gestDays : 63;
+
+      const dueDate = new Date(startDate);
+      dueDate.setDate(dueDate.getDate() + gestDays);
+
+      const ecoStart = new Date(startDate); ecoStart.setDate(ecoStart.getDate() + Math.round(gestDays * 0.35));
+      const ecoEnd = new Date(startDate); ecoEnd.setDate(ecoEnd.getDate() + Math.round(gestDays * 0.45));
+
+      const palpStart = new Date(startDate); palpStart.setDate(palpStart.getDate() + Math.round(gestDays * 0.4));
+      const radStart = new Date(startDate); radStart.setDate(radStart.getDate() + Math.round(gestDays * 0.72));
+
+      const today = new Date();
+      const diffTime = today - startDate;
+      const daysElapsed = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+
+      document.getElementById('resDueDate').textContent = dueDate.toLocaleDateString('es-PE', options);
+      document.getElementById('resEcoWindow').textContent = `${ecoStart.toLocaleDateString('es-PE', options)} - ${ecoEnd.toLocaleDateString('es-PE', options)}`;
+      document.getElementById('resPalpWindow').textContent = `A partir del ${palpStart.toLocaleDateString('es-PE', options)}`;
+      document.getElementById('resRadWindow').textContent = `A partir del ${radStart.toLocaleDateString('es-PE', options)}`;
+      document.getElementById('resDaysElapsed').textContent = daysElapsed >= 0 ? daysElapsed : 0;
+
+      document.getElementById('gestationResults').classList.remove('hidden');
+    });
+  }
+
+  // --- 8. INTERPRETADOR DE LABORATORIO (ANEMIA Y AZOTEMIA) ---
+  const btnAnemia = document.getElementById('btnCalculateAnemia');
+  if (btnAnemia) {
+    btnAnemia.addEventListener('click', () => {
+      const species = document.getElementById('labSpecies').value;
+      const ht = parseFloat(document.getElementById('labHt').value) || 0;
+      const ret = parseFloat(document.getElementById('labRet').value) || 0;
+
+      if (ht <= 0) { alert("Ingresa un Hematocrito válido."); return; }
+
+      const normalHt = species === 'canine' ? 45 : 37;
+      const correctedRet = ret * (ht / normalHt);
+
+      let type = "";
+      const threshold = species === 'canine' ? 1.0 : 0.4;
+
+      if (correctedRet >= threshold) {
+        type = "Anemia REGENERATIVA (Respuesta medular activa, posible hemorragia o hemólisis)";
+      } else {
+        type = "Anemia NO REGENERATIVA (Sin respuesta medular adecuada, posible problema aplásico o renal)";
+      }
+
+      document.getElementById('resRetCorrected').textContent = correctedRet.toFixed(2);
+      document.getElementById('resAnemiaType').textContent = type;
+      document.getElementById('anemiaResults').classList.remove('hidden');
+    });
+  }
+
+  const btnAzotemia = document.getElementById('btnCalculateAzotemia');
+  if (btnAzotemia) {
+    btnAzotemia.addEventListener('click', () => {
+      const bun = parseFloat(document.getElementById('labBUN').value) || 0;
+      const crea = parseFloat(document.getElementById('labCrea').value) || 0;
+      const usg = parseFloat(document.getElementById('labUSG').value) || 0;
+
+      if (bun <= 0 && crea <= 0) { alert("Ingresa valores de Urea o Creatinina."); return; }
+
+      let type = "Azotemia Confirmada";
+      let desc = "";
+
+      if (usg >= 1.030) {
+        type = "Azotemia PRERRENAL";
+        desc = "La riñón hiperconcentra la orina (DU > 1.030). Probable deshidratación o hipoperfusión renal.";
+      } else if (usg >= 1.008 && usg <= 1.012) {
+        type = "Azotemia RENAL PRIMARIA (Isostenuria)";
+        desc = "El riñón ha perdido la capacidad de concentrar la orina (DU 1.008 - 1.012). Daño parenquimatoso renal.";
+      } else if (usg < 1.008) {
+        type = "Azotemia RENAL / Hipostenuria";
+        desc = "Capacidad de concentración alterada (DU < 1.008). Evaluar patología renal o endócrina.";
+      } else {
+        type = "Azotemia de Origen A Determinar / Posible POSTRRENAL";
+        desc = "Densidad urinaria intermedia (1.013 - 1.029). Descartar urolitiasis, ruptura de vejiga o falla previa.";
+      }
+
+      document.getElementById('resAzotemiaType').textContent = type;
+      document.getElementById('resAzotemiaDesc').textContent = desc;
+      document.getElementById('azotemiaResults').classList.remove('hidden');
+    });
+  }
+
+  // --- 9. BITÁCORA DE FÁRMACOS CONTROLADOS ---
+  function renderControlledLogTable() {
+    const tableBody = document.getElementById('ctrlLogTableBody');
+    if (!tableBody) return;
+
+    const log = JSON.parse(localStorage.getItem('controlledDrugsLog') || '[]');
+    tableBody.innerHTML = '';
+
+    if (log.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="5" style="padding:10px; text-align:center; color:var(--text-secondary);">No hay registros en la bitácora.</td></tr>';
+      return;
+    }
+
+    log.forEach(item => {
+      const tr = document.createElement('tr');
+      tr.style.borderBottom = '1px solid var(--border-color)';
+      tr.innerHTML = `
+        <td style="padding: 8px;">${item.date}</td>
+        <td style="padding: 8px; font-weight: 700; color: var(--unamba-blue);">${item.drug}</td>
+        <td style="padding: 8px; font-weight: 700; color: var(--danger-color);">${item.doseMl} ml</td>
+        <td style="padding: 8px;">${item.patient}</td>
+        <td style="padding: 8px;">${item.vet}</td>
+      `;
+      tableBody.appendChild(tr);
+    });
+  }
+
+  const btnAddLog = document.getElementById('btnAddControlledLog');
+  if (btnAddLog) {
+    btnAddLog.addEventListener('click', () => {
+      const drug = document.getElementById('ctrlDrug').value;
+      const doseMl = parseFloat(document.getElementById('ctrlDoseMl').value) || 0;
+      const patient = document.getElementById('ctrlPatient').value || 'Sin Nombre';
+      const vet = document.getElementById('ctrlVet').value || 'Sin Nombre';
+
+      if (doseMl <= 0) { alert("Ingresa el volumen administrado."); return; }
+
+      const now = new Date();
+      const newEntry = {
+        date: now.toLocaleString('es-PE'),
+        drug: drug,
+        doseMl: doseMl,
+        patient: patient,
+        vet: vet
+      };
+
+      const log = JSON.parse(localStorage.getItem('controlledDrugsLog') || '[]');
+      log.unshift(newEntry);
+      localStorage.setItem('controlledDrugsLog', JSON.stringify(log));
+
+      document.getElementById('ctrlDoseMl').value = '';
+      renderControlledLogTable();
+      alert('✅ Movimiento de fármaco controlado registrado en bitácora.');
+    });
+  }
+
+  const btnClearLog = document.getElementById('btnClearControlledLog');
+  if (btnClearLog) {
+    btnClearLog.addEventListener('click', () => {
+      if (confirm('¿Deseas borrar todo el historial de la bitácora de controlados?')) {
+        localStorage.removeItem('controlledDrugsLog');
+        renderControlledLogTable();
+      }
+    });
+  }
+
+  renderControlledLogTable();
+
+  // --- 10. TRANSFUSIÓN Y OSMOLARIDAD ---
   const btnTrans = document.getElementById('btnCalculateTransfusion');
   if (btnTrans) {
     btnTrans.addEventListener('click', () => {
@@ -397,7 +597,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 8. BUSCADOR Y VADEMÉCUM ---
+  // --- 11. BUSCADOR Y VADEMÉCUM ---
   const drugSearchInput = document.getElementById('drugSearch');
   const drugSelect = document.getElementById('drugPreset');
 
@@ -455,7 +655,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 9. CRI (INFUSIÓN CONTINUA) ---
+  // --- 12. CRI (INFUSIÓN CONTINUA) ---
   const btnCRI = document.getElementById('btnCalculateCRI');
   if (btnCRI) {
     btnCRI.addEventListener('click', () => {
@@ -479,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 10. ANESTESIA Y RCP ---
+  // --- 13. ANESTESIA Y RCP ---
   const btnAnes = document.getElementById('btnCalculateAnesthesia');
   if (btnAnes) {
     btnAnes.addEventListener('click', () => {
@@ -519,7 +719,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 11. GASOMETRÍA ---
+  // --- 14. GASOMETRÍA ---
   const btnGas = document.getElementById('btnCalculateGas');
   if (btnGas) {
     btnGas.addEventListener('click', () => {
@@ -546,7 +746,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 12. ADITIVOS Y DILUCIONES ---
+  // --- 15. ADITIVOS Y DILUCIONES ---
   const btnAdditives = document.getElementById('btnCalculateAdditives');
   if (btnAdditives) {
     btnAdditives.addEventListener('click', () => {
@@ -561,8 +761,8 @@ document.addEventListener('DOMContentLoaded', () => {
       else if (kLevel < 3.5) meqPerLiter = 28;
 
       const totalMeqNeeded = (meqPerLiter * bagVol) / 1000;
-      const kclMl = totalMeqNeeded / 2; // 2 mEq/ml
-      const dextMl = (dextPct * bagVol) / 50; // Dextrosa al 50%
+      const kclMl = totalMeqNeeded / 2;
+      const dextMl = (dextPct * bagVol) / 50;
 
       document.getElementById('resKclMl').textContent = kclMl.toFixed(1);
       document.getElementById('resMeqLiter').textContent = meqPerLiter;
@@ -592,7 +792,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 13. TOXICOLOGÍA Y CHOCOLATE ---
+  // --- 16. TOXICOLOGÍA Y CHOCOLATE ---
   const btnTox = document.getElementById('btnCalculateTox');
   if (btnTox) {
     btnTox.addEventListener('click', () => {
@@ -635,7 +835,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 14. UCI Y NUTRICIÓN ---
+  // --- 17. UCI Y NUTRICIÓN ---
   const btnUCI = document.getElementById('btnCalculateUCI');
   if (btnUCI) {
     btnUCI.addEventListener('click', () => {
@@ -673,6 +873,147 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('resRER').textContent = Math.round(rer);
       document.getElementById('resMER').textContent = Math.round(rer * factor);
       document.getElementById('nutrResults').classList.remove('hidden');
+    });
+  }
+
+  // --- 18. BUSCADOR GLOBAL CON ATAJO DE TECLADO (CTRL + K) ---
+  const searchModal = document.getElementById('searchModal');
+  const globalSearchInput = document.getElementById('globalSearchInput');
+  const globalSearchResults = document.getElementById('globalSearchResults');
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      searchModal.classList.toggle('hidden');
+      if (!searchModal.classList.contains('hidden')) {
+        globalSearchInput.focus();
+      }
+    } else if (e.key === 'Escape' && !searchModal.classList.contains('hidden')) {
+      searchModal.classList.add('hidden');
+    }
+  });
+
+  if (globalSearchInput) {
+    globalSearchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase().trim();
+      globalSearchResults.innerHTML = '';
+
+      if (term.length === 0) {
+        globalSearchResults.innerHTML = '<p class="search-hint">Presiona <strong>ESC</strong> para cerrar</p>';
+        return;
+      }
+
+      Object.keys(drugDatabase).forEach(key => {
+        if (key.includes(term)) {
+          const item = document.createElement('div');
+          item.className = 'search-item';
+          item.innerHTML = `<span>💊 <strong>${key.toUpperCase()}</strong></span><small>Vademécum</small>`;
+          item.onclick = () => {
+            switchTab('dosis');
+            document.getElementById('drugPreset').value = key;
+            document.getElementById('drugPreset').dispatchEvent(new Event('change'));
+            searchModal.classList.add('hidden');
+          };
+          globalSearchResults.appendChild(item);
+        }
+      });
+    });
+  }
+
+  // --- 19. ANESTESIA LOCAL Y LAST ---
+  const btnLocal = document.getElementById('btnCalculateLocal');
+  if (btnLocal) {
+    btnLocal.addEventListener('click', () => {
+      const weight = parseFloat(document.getElementById('localWeight').value) || 0;
+      const species = document.getElementById('localSpecies').value;
+      const drug = document.getElementById('localDrug').value;
+      const dose = parseFloat(document.getElementById('localDose').value) || 0;
+
+      if (weight <= 0 || dose <= 0) { alert("Ingresa datos válidos."); return; }
+
+      let conc = drug === 'lido2' ? 20 : 5;
+      let maxMgKg = species === 'canine' ? (drug === 'lido2' ? 10 : 2) : (drug === 'lido2' ? 5 : 1);
+
+      const totalMgNeeded = weight * dose;
+      const totalMlNeeded = totalMgNeeded / conc;
+      const maxMgAllowed = weight * maxMgKg;
+      const maxMlAllowed = maxMgAllowed / conc;
+
+      document.getElementById('resLocalVol').textContent = totalMlNeeded.toFixed(2);
+      document.getElementById('resLocalMaxMg').textContent = maxMgAllowed.toFixed(1);
+      document.getElementById('resLocalMaxMl').textContent = maxMlAllowed.toFixed(2);
+
+      const alertBox = document.getElementById('lastAlert');
+      if (totalMgNeeded > maxMgAllowed) {
+        alertBox.classList.remove('hidden');
+      } else {
+        alertBox.classList.add('hidden');
+      }
+
+      document.getElementById('localResults').classList.remove('hidden');
+    });
+  }
+
+  // --- 20. CAMÉLIDOS SUDAMERICANOS ---
+  const btnPlasma = document.getElementById('btnCalculatePlasma');
+  if (btnPlasma) {
+    btnPlasma.addEventListener('click', () => {
+      const weight = parseFloat(document.getElementById('criaWeight').value) || 0;
+      if (weight <= 0) { alert("Ingresa el peso de la cría."); return; }
+
+      const plasmaMl = weight * 20;
+      document.getElementById('resPlasmaMl').textContent = Math.round(plasmaMl);
+      document.getElementById('plasmaResults').classList.remove('hidden');
+    });
+  }
+
+  const btnC3 = document.getElementById('btnCalculateC3');
+  if (btnC3) {
+    btnC3.addEventListener('click', () => {
+      const weight = parseFloat(document.getElementById('c3Weight').value) || 0;
+      if (weight <= 0) { alert("Ingresa un peso válido."); return; }
+
+      document.getElementById('resC3Omeprazol').textContent = (weight * 1.0).toFixed(1);
+      document.getElementById('resC3Pantoprazol').textContent = (weight * 1.0).toFixed(1);
+      document.getElementById('c3Results').classList.remove('hidden');
+    });
+  }
+
+  // --- 21. GENERADOR FICHA DE JAULA ---
+  const btnCageCard = document.getElementById('btnPrintCageCard');
+  if (btnCageCard) {
+    btnCageCard.addEventListener('click', () => {
+      const name = document.getElementById('patName').value || 'Sin Nombre';
+      const weight = document.getElementById('patWeightMaster').value || '---';
+      const species = document.getElementById('patSpecies').value || '---';
+      const notes = document.getElementById('patNotes').value || 'Sin observaciones';
+
+      const win = window.open('', '', 'width=600,height=400');
+      win.document.write(`
+        <html>
+          <head>
+            <title>Ficha de Jaula - UNAMBA</title>
+            <style>
+              body { font-family: serif; padding: 20px; text-align: center; border: 4px solid #000; }
+              h1 { margin: 0; font-size: 28px; }
+              h2 { color: #006837; font-size: 20px; }
+              .box { font-size: 18px; text-align: left; margin-top: 20px; line-height: 1.6; }
+            </style>
+          </head>
+          <body>
+            <h2>UNIVERSIDAD NACIONAL MICAELA BASTIDAS DE APURÍMAC</h2>
+            <h1>PACIENTE HOSPITALIZADO</h1>
+            <div class="box">
+              <p><strong>Paciente:</strong> ${name}</p>
+              <p><strong>Especie:</strong> ${species.toUpperCase()}</p>
+              <p><strong>Peso:</strong> ${weight} kg</p>
+              <p><strong>Observaciones / Diagnóstico:</strong> ${notes}</p>
+            </div>
+            <script>window.print();</script>
+          </body>
+        </html>
+      `);
+      win.document.close();
     });
   }
 

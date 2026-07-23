@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VetCalc UNAMBA - Suite Clínica</title>
-  <!-- Favicon Médico Institucional -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23006837'><path d='M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.89 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z'/></svg>">
+  <title>VetCalc UNAMBA - Suite Clínica Multiespecie</title>
 
+  <!-- Favicon Médico Institucional -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23006837'><path d='M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.89 2 1.99 2H19c1.1 0 2-.9 2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z'/></svg>">
+
+  <!-- Fuentes Tipográficas Vintage Académicas (Playfair Display & Lora) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="styles.css">
   
   <!-- Librería para exportación directa a PDF -->
@@ -29,7 +32,7 @@
         </div>
         <div class="brand-titles">
           <span class="uni-tag">UNIVERSIDAD NACIONAL MICAELA BASTIDAS DE APURÍMAC</span>
-          <h1>Escuela Profesional de Medicina Veterinaria y Zootecnia</h1>
+          <h1>VetCalc UNAMBA</h1>
           <p class="brand-sub">Suite Digital Multiespecie • Sistema Inteligente de Cálculo Clínico y Diagnóstico</p>
         </div>
       </div>
@@ -41,8 +44,8 @@
         <div class="widget-box">
           <span class="status-dot"></span>
           <div class="widget-info">
-            <span class="widget-label">ESTADO DEL SISTEMA</span>
-            <span class="widget-val">En Línea • V2.4</span>
+            <span class="widget-label">SISTEMA</span>
+            <span class="widget-val">En Línea • V3.0</span>
           </div>
         </div>
 
@@ -50,7 +53,7 @@
         <div class="widget-box">
           <svg class="widget-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
           <div class="widget-info">
-            <span class="widget-label" id="headerDate">Cargando fecha...</span>
+            <span class="widget-label" id="headerDate">FECHA</span>
             <span class="widget-val" id="headerClock">00:00:00</span>
           </div>
         </div>
@@ -60,7 +63,7 @@
           <svg class="widget-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
           <div class="widget-info">
             <span class="widget-label">COBERTURA</span>
-            <span class="widget-val">10 Especies / 13 Módulos</span>
+            <span class="widget-val">10 Especies / 18 Módulos</span>
           </div>
         </div>
 
@@ -68,7 +71,7 @@
         <div class="widget-box theme-selector-box">
           <svg class="widget-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>
           <div class="widget-info">
-            <span class="widget-label">TEMA VISUAL</span>
+            <span class="widget-label">TEMA</span>
             <select id="themeSelector" class="theme-dropdown">
               <option value="navy">🔵 Azul Marino</option>
               <option value="green">🟢 Verde Quirúrgico</option>
@@ -83,7 +86,7 @@
     </div>
   </header>
 
-  <!-- BARRA DE NAVEGACIÓN EN UNA SOLA FILA -->
+  <!-- BARRA DE NAVEGACIÓN ORGANIZADA EN MULTI-FILAS VISIBLES -->
   <nav class="nav-container">
     <div class="tabs-navigation">
       <button class="tab-button active" onclick="switchTab('paciente', event)">
@@ -94,6 +97,21 @@
       <button class="tab-button" onclick="switchTab('fluidos', event)">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
         Fluidos
+      </button>
+
+      <button class="tab-button" onclick="switchTab('gestacion', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        Gestación / Parto
+      </button>
+
+      <button class="tab-button" onclick="switchTab('laboratorio', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+        Interpretador Lab
+      </button>
+
+      <button class="tab-button" onclick="switchTab('controlados', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        Fármacos Controlados
       </button>
 
       <button class="tab-button" onclick="switchTab('transfusion', event)">
@@ -114,6 +132,11 @@
       <button class="tab-button" onclick="switchTab('anestesia', event)">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg>
         Anestesia
+      </button>
+
+      <button class="tab-button" onclick="switchTab('bloqueos', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2 4 16t-2 5 5-2L21 5z"></path></svg>
+        Anestesia Local
       </button>
 
       <button class="tab-button" onclick="switchTab('rcp', event)">
@@ -144,6 +167,11 @@
       <button class="tab-button" onclick="switchTab('uci', event)">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
         UCI y Nutrición
+      </button>
+
+      <button class="tab-button" onclick="switchTab('camelidos', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"></path></svg>
+        Camélidos
       </button>
 
       <button class="tab-button" onclick="switchTab('receta', event)">
@@ -274,16 +302,17 @@
           <button id="btnSavePatient" class="btn-action" style="margin-top:0; flex:1;">Guardar Ficha</button>
           <button id="btnLoadPatient" class="btn-action" style="margin-top:0; background-color: #334155; flex:1;">Cargar Paciente</button>
           <button id="btnClearPatient" class="btn-action" style="margin-top:0; background-color: #dc2626; flex:1;">Limpiar Datos</button>
-          <button id="btnExportPDF" class="btn-action" style="margin-top:0; background-color: #0f766e; flex:1;">Exportar Ficha PDF</button>
+          <button id="btnPrintCageCard" class="btn-action" style="margin-top:0; background-color: #6366f1; flex:1;">Ficha de Jaula</button>
+          <button id="btnExportPDF" class="btn-action" style="margin-top:0; background-color: #0f766e; flex:1;">Exportar PDF</button>
         </div>
       </section>
     </div>
 
-    <!-- PESTAÑA 1: FLUIDOTERAPIA -->
+    <!-- PESTAÑA 1: FLUIDOTERAPIA CON DESGLOSE COMPLETO -->
     <div id="tab-fluidos" class="tab-content">
       <section class="card">
         <div class="card-header">
-          <h2>Módulo de Fluidoterapia (Plan 24 Horas)</h2>
+          <h2>Módulo de Fluidoterapia (Plan Personalizado y Monitoreo Tiempo a Tiempo)</h2>
         </div>
         
         <div class="form-layout">
@@ -307,28 +336,222 @@
             <input type="number" id="losses" value="0">
           </div>
 
-          <div class="form-group full-width">
+          <div class="form-group">
+            <label for="fluidHours">Duración del Plan (Horas):</label>
+            <input type="number" id="fluidHours" value="24" placeholder="Ej. 24, 12, 8">
+          </div>
+
+          <div class="form-group">
             <label for="dropFactor">Equipo de Goteo:</label>
             <select id="dropFactor">
-              <option value="20">Macrogotero (20 gotas/ml)</option>
+              <option value="20">Macrogotero Normal (20 gotas/ml)</option>
               <option value="15">Macrogotero (15 gotas/ml)</option>
-              <option value="10">Macrogotero (10 gotas/ml)</option>
-              <option value="60">Microgotero (60 gotas/ml)</option>
+              <option value="10">Macrogotero Veterinario Grandes (10 gotas/ml)</option>
+              <option value="60">Microgotero Pedriátrico/Felino (60 gotas/ml)</option>
             </select>
           </div>
         </div>
 
-        <button id="btnCalculateFluid" class="btn-action">Calcular Plan de Fluidos</button>
+        <button id="btnCalculateFluid" class="btn-action">Calcular Plan y Tiempos de Goteo</button>
 
         <div id="fluidResults" class="results-box hidden">
-          <h3>Plan Calculado de Fluidoterapia</h3>
+          <h3>1. Resumen General del Plan (<span id="resPlanHoursLabel">24</span> Horas)</h3>
           <div class="results-grid">
             <p><strong>Déficit Deshidratación:</strong> <span id="resDeficit">0</span> ml</p>
-            <p><strong>Volumen Total 24h:</strong> <span id="resTotalVol">0</span> ml</p>
-            <p class="highlight"><strong>Tasa de Infusión:</strong> <span id="resMlHour">0</span> ml/h</p>
-            <p class="highlight"><strong>Goteo:</strong> <span id="resGpm">0</span> gotas/min (<span id="resSecDrop">0</span> seg/gota)</p>
+            <p><strong>Volumen Total Requerido:</strong> <span id="resTotalVol" class="highlight">0</span> ml</p>
           </div>
-          <button class="btn-print" onclick="window.print()">Imprimir Ficha de Tratamiento UNAMBA</button>
+
+          <hr class="section-divider">
+
+          <h3>2. Velocidad y Tasas de Infusión (Segundos, Minutos, Horas)</h3>
+          <div class="results-grid">
+            <p class="highlight"><strong>Tasa por Hora:</strong> <span id="resMlHour">0</span> ml/h</p>
+            <p><strong>Tasa por Minuto:</strong> <span id="resMlMin">0</span> ml/min</p>
+            <p class="highlight"><strong>Goteo por Minuto:</strong> <span id="resGpm">0</span> gotas/min</p>
+            <p><strong>Goteo por Segundo:</strong> <span id="resGps">0</span> gotas/seg</p>
+            <p class="highlight" style="grid-column: 1 / -1;"><strong>Frecuencia de Caída:</strong> 1 gota cada <span id="resSecDrop">0</span> segundos</p>
+          </div>
+
+          <hr class="section-divider">
+
+          <h3>3. Tabla de Control y Monitoreo Acumulado en Jaula</h3>
+          <div style="overflow-x: auto; margin-top: 10px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+              <thead>
+                <tr style="background-color: var(--unamba-green); color: white;">
+                  <th style="padding: 8px; border-radius: 6px 0 0 6px;">Tiempo Transcurrido</th>
+                  <th style="padding: 8px;">Volumen Que Debe Haber Pasado</th>
+                  <th style="padding: 8px; border-radius: 0 6px 6px 0;">Volumen Restante en Bolsa</th>
+                </tr>
+              </thead>
+              <tbody id="fluidTableBody">
+                <!-- Se genera dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+
+          <button class="btn-print" onclick="window.print()" style="margin-top: 15px;">Imprimir Ficha de Fluidoterapia UNAMBA</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA: CALCULADORA DE GESTACIÓN Y CALENDARIO OBSTÉTRICO -->
+    <div id="tab-gestacion" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Calculadora de Gestación y Calendario Obstétrico Multiespecie</h2>
+        </div>
+
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="gestSpecies">Especie:</label>
+            <select id="gestSpecies">
+              <option value="canine">Canina (Perra ~ 63 días)</option>
+              <option value="feline">Felina (Gata ~ 65 días)</option>
+              <option value="alpaca">Alpaca / Llama (~ 342 días)</option>
+              <option value="bovine">Bovina (Vaca ~ 283 días)</option>
+              <option value="equine">Equina (Yegua ~ 340 días)</option>
+              <option value="ovine">Ovina / Caprina (~ 150 días)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="gestDate">Fecha de Servicio / Inseminación / Manta:</label>
+            <input type="date" id="gestDate">
+          </div>
+        </div>
+
+        <button id="btnCalculateGestation" class="btn-action">Calcular Calendario Obstétrico</button>
+
+        <div id="gestationResults" class="results-box hidden">
+          <h3>Calendario de Monitoreo Obstétrico</h3>
+          <p class="highlight"><strong>Fecha Probable de Parto (FPP):</strong> <span id="resDueDate">--/--/----</span></p>
+          <div class="results-grid" style="margin-top: 15px;">
+            <p><strong>Periodo Ideal Ecografía Diagnóstica:</strong> <span id="resEcoWindow">--</span></p>
+            <p><strong>Periodo Ideal Palpación / Diagnóstico:</strong> <span id="resPalpWindow">--</span></p>
+            <p><strong>Evaluación Radiográfica (Sostén Óseo):</strong> <span id="resRadWindow">--</span></p>
+            <p><strong>Días de Gestación Transcurridos Hoy:</strong> <span id="resDaysElapsed" class="highlight">0</span> días</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA: INTERPRETADOR DE LABORATORIO (ANEMIA Y AZOTEMIA) -->
+    <div id="tab-laboratorio" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Interpretador Clínico de Laboratorio (Anemia y Azotemia)</h2>
+        </div>
+
+        <h3 class="section-subtitle">1. Evaluación de Anemia y Reticulocitos Corregidos</h3>
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="labSpecies">Especie:</label>
+            <select id="labSpecies">
+              <option value="canine">Canino (Ht Ref: 45%)</option>
+              <option value="feline">Felino (Ht Ref: 37%)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="labHt">Hematocrito Paciente (%):</label>
+            <input type="number" id="labHt" placeholder="Ej. 18" step="1">
+          </div>
+          <div class="form-group full-width">
+            <label for="labRet">Reticulocitos Contados (%):</label>
+            <input type="number" id="labRet" placeholder="Ej. 2.5" step="0.1">
+          </div>
+        </div>
+        <button id="btnCalculateAnemia" class="btn-action">Evaluar Regeneración Hematológica</button>
+
+        <div id="anemiaResults" class="results-box hidden">
+          <h3>Diagnóstico Hematológico</h3>
+          <p><strong>Reticulocitos Corregidos (%):</strong> <span id="resRetCorrected" class="highlight">0</span> %</p>
+          <p><strong>Tipo de Anemia:</strong> <span id="resAnemiaType" class="highlight-danger">--</span></p>
+        </div>
+
+        <hr class="section-divider">
+
+        <h3 class="section-subtitle">2. Clasificación de Azotemia y Densidad Urinaria (DU)</h3>
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="labBUN">Urea / BUN (mg/dL):</label>
+            <input type="number" id="labBUN" placeholder="Ej. 85">
+          </div>
+          <div class="form-group">
+            <label for="labCrea">Creatinina (mg/dL):</label>
+            <input type="number" id="labCrea" placeholder="Ej. 3.2" step="0.1">
+          </div>
+          <div class="form-group full-width">
+            <label for="labUSG">Densidad Urinaria (Refractómetro):</label>
+            <input type="number" id="labUSG" placeholder="Ej. 1.012" step="0.001">
+          </div>
+        </div>
+        <button id="btnCalculateAzotemia" class="btn-action">Clasificar Azotemia</button>
+
+        <div id="azotemiaResults" class="results-box hidden">
+          <h3>Clasificación de Azotemia</h3>
+          <p class="highlight"><strong>Origen Diagnóstico:</strong> <span id="resAzotemiaType">--</span></p>
+          <p id="resAzotemiaDesc">--</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA: REGISTRO Y BITÁCORA DE FÁRMACOS CONTROLADOS -->
+    <div id="tab-controlados" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Bitácora Digital de Registro de Fármacos Controlados</h2>
+        </div>
+
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="ctrlDrug">Fármaco Controlado Usado:</label>
+            <select id="ctrlDrug">
+              <option value="Ketamina 10%">Ketamina 10% (100 mg/ml)</option>
+              <option value="Tramadol 50mg/ml">Tramadol (50 mg/ml)</option>
+              <option value="Diazepam 5mg/ml">Diazepam (5 mg/ml)</option>
+              <option value="Midazolam 5mg/ml">Midazolam (5 mg/ml)</option>
+              <option value="Fentanilo 0.05mg/ml">Fentanilo (0.05 mg/ml)</option>
+              <option value="Fenobarbital 60mg/ml">Fenobarbital (60 mg/ml)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="ctrlDoseMl">Volumen Administrado (ml):</label>
+            <input type="number" id="ctrlDoseMl" placeholder="Ej. 1.5" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="ctrlPatient">Paciente / Historia:</label>
+            <input type="text" id="ctrlPatient" placeholder="Ej. Firulais (HC: 4022)">
+          </div>
+          <div class="form-group">
+            <label for="ctrlVet">Médico / Responsable:</label>
+            <input type="text" id="ctrlVet" placeholder="Ej. Dr. M. Quispe">
+          </div>
+        </div>
+
+        <button id="btnAddControlledLog" class="btn-action">Registrar Uso de Fármaco</button>
+
+        <div style="overflow-x: auto; margin-top: 25px;">
+          <h3>Historial de Movimientos de Controlados</h3>
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem;">
+            <thead>
+              <tr style="background-color: var(--unamba-blue); color: white;">
+                <th style="padding: 10px; border-radius: 6px 0 0 6px;">Fecha y Hora</th>
+                <th style="padding: 10px;">Fármaco</th>
+                <th style="padding: 10px;">Volumen (ml)</th>
+                <th style="padding: 10px;">Paciente</th>
+                <th style="padding: 10px; border-radius: 0 6px 6px 0;">Médico</th>
+              </tr>
+            </thead>
+            <tbody id="ctrlLogTableBody">
+              <!-- Se puebla dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+          <button id="btnClearControlledLog" class="btn-action" style="background-color: #dc2626; flex: 1;">Borrar Bitácora</button>
+          <button class="btn-action" onclick="window.print()" style="background-color: #334155; flex: 1;">Imprimir Bitácora</button>
         </div>
       </section>
     </div>
@@ -548,11 +771,11 @@
       </section>
     </div>
 
-    <!-- PESTAÑA 4: ANESTESIA -->
+    <!-- PESTAÑA 4: ANESTESIA GENERAL -->
     <div id="tab-anestesia" class="tab-content">
       <section class="card">
         <div class="card-header">
-          <h2>Módulo de Anestesia y Respiratorio</h2>
+          <h2>Módulo de Anestesia General y Respiratorio</h2>
         </div>
 
         <div class="form-layout">
@@ -584,6 +807,54 @@
             <p><strong>Volumen Corriente (Vt):</strong> <span id="resTidalVolume">0</span> ml (10-15 ml/kg)</p>
             <p class="highlight"><strong>Bolsa Reservorio:</strong> <span id="resBagSize">0</span> L</p>
             <p><strong>Circuito Anestésico:</strong> <span id="resCircuit">0</span></p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA: ANESTESIA LOCAL Y BLOQUEOS REGIONALES -->
+    <div id="tab-bloqueos" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Calculadora de Anestesia Local y Alerta de Toxicidad (LAST)</h2>
+        </div>
+
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="localWeight">Peso Paciente (kg):</label>
+            <input type="number" id="localWeight" placeholder="Ej. 12" step="0.1">
+          </div>
+
+          <div class="form-group">
+            <label for="localSpecies">Especie:</label>
+            <select id="localSpecies">
+              <option value="canine">Canino (Máx. Lidocaína 10 mg/kg / Bupi 2 mg/kg)</option>
+              <option value="feline">Felino (Máx. Lidocaína 5 mg/kg / Bupi 1 mg/kg - Sensible)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="localDrug">Fármaco Anestésico Local:</label>
+            <select id="localDrug">
+              <option value="lido2">Lidocaína 2% (20 mg/ml)</option>
+              <option value="bupi05">Bupivacaína 0.5% (5 mg/ml)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="localDose">Dosis Deseada (mg/kg):</label>
+            <input type="number" id="localDose" placeholder="Ej. 2.0" step="0.1">
+          </div>
+        </div>
+
+        <button id="btnCalculateLocal" class="btn-action">Calcular Volumen y Límite Tóxico</button>
+
+        <div id="localResults" class="results-box hidden">
+          <h3>Volumen de Bloqueo</h3>
+          <p><strong>Volumen Calculado:</strong> <span id="resLocalVol" class="highlight">0</span> ml</p>
+          <p><strong>Dosis Máxima Absoluta de Seguridad:</strong> <span id="resLocalMaxMg">0</span> mg (<span id="resLocalMaxMl">0</span> ml)</p>
+          <div id="lastAlert" class="alert-box hidden" style="margin-top:10px; padding:10px;">
+            ⚠️ <strong>¡ALERTA LAST!</strong> La dosis sobrepasa el límite seguro de la especie.
           </div>
         </div>
       </section>
@@ -898,6 +1169,51 @@
       </section>
     </div>
 
+    <!-- PESTAÑA: ESPECIALIDAD CAMÉLIDOS SUDAMERICANOS -->
+    <div id="tab-camelidos" class="tab-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Módulo Especializado en Camélidos Sudamericanos (UNAMBA)</h2>
+        </div>
+
+        <h3 class="section-subtitle">1. Transfusión de Plasma en Crías (Falta de Transferencia Pasiva - FTP)</h3>
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="criaWeight">Peso de la Cría (kg):</label>
+            <input type="number" id="criaWeight" placeholder="Ej. 7.5" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="criaTP">Proteínas Totales Séricas (g/dL):</label>
+            <input type="number" id="criaTP" placeholder="Ej. 4.2" step="0.1">
+          </div>
+        </div>
+        <button id="btnCalculatePlasma" class="btn-action">Calcular Plasma Requerido</button>
+
+        <div id="plasmaResults" class="results-box hidden">
+          <h3>Dosis de Plasma Hiperinmune</h3>
+          <p class="highlight"><strong>Volumen de Plasma Sugerido:</strong> <span id="resPlasmaMl">0</span> ml (20 ml/kg por dosis)</p>
+          <p><strong>Objetivo:</strong> Elevar Proteínas Totales > 5.5 g/dL para asegurar inmunidad pasiva.</p>
+        </div>
+
+        <hr class="section-divider">
+
+        <h3 class="section-subtitle">2. Ulceración del Compartimento 3 (C3) y Prevención</h3>
+        <div class="form-layout">
+          <div class="form-group">
+            <label for="c3Weight">Peso del Camélido (kg):</label>
+            <input type="number" id="c3Weight" placeholder="Ej. 50" step="1">
+          </div>
+        </div>
+        <button id="btnCalculateC3" class="btn-action">Calcular Protector Gástrico C3</button>
+
+        <div id="c3Results" class="results-box hidden">
+          <h3>Tratamiento Protector de C3</h3>
+          <p><strong>Omeprazol IV/SC (1.0 mg/kg):</strong> <span id="resC3Omeprazol" class="highlight">0</span> mg</p>
+          <p><strong>Pantoprazol IV (1.0 mg/kg):</strong> <span id="resC3Pantoprazol">0</span> mg</p>
+        </div>
+      </section>
+    </div>
+
     <!-- PESTAÑA: RECETARIO INSTITUCIONAL -->
     <div id="tab-receta" class="tab-content">
       <section class="card">
@@ -939,6 +1255,18 @@
     </div>
 
   </main>
+
+  <!-- MODAL DE BÚSQUEDA RÁPIDA (CTRL + K) -->
+  <div id="searchModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <input type="text" id="globalSearchInput" placeholder="🔍 Escribe para buscar fármaco (Ej. Meloxicam, Tramadol)...">
+      </div>
+      <div id="globalSearchResults" class="modal-results">
+        <p class="search-hint">Presiona <strong>ESC</strong> para cerrar</p>
+      </div>
+    </div>
+  </div>
 
   <footer class="footer-unamba">
     <p>Escuela Profesional de Medicina Veterinaria y Zootecnia — <strong>Universidad Nacional Micaela Bastidas de Apurímac</strong></p>
